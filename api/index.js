@@ -1,6 +1,8 @@
+import 'dotenv/config';
 import express from "express";
 import mongoose from "mongoose";
-import 'dotenv/config';
+import userRouter from "./routes/user.route.js";
+
 
 mongoose
   .connect(process.env.MONGO)
@@ -11,13 +13,11 @@ mongoose
     console.log(err);
   });
 
-  
+
 const app = express();
 const port = 3000;
 
-app.get((req, res) => {
-  res.render();
-});
+app.use("/api/user",userRouter);
 
 app.listen(port, () => {
   console.log("listening from port: " + port);
