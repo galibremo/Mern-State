@@ -2,11 +2,12 @@ import User from "../models/user.model.js";
 import bcryptjs from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { errorHandler } from "../utils/error.js";
+import nodemailer from 'nodemailer';
 
 export const signup = async (req, res, next) => {
   const { username, email, password } = req.body;
   const hashedPassword = bcryptjs.hashSync(password, 10);
-    const newUser = new User({ username, email, password: hashedPassword });
+  const newUser = new User({ username, email, password: hashedPassword });
   try {
     await newUser.save();
     res.status(201).json("User created successfully!");
@@ -74,4 +75,35 @@ export const signout = async (req, res, next) => {
   } catch (error) {
     next(error);
   }
+};
+export const forgetpassword = async (req, res, next) => {
+    const validUser = await User.findOne({ email: req.body.email });
+    if (!validUser) return next(errorHandler(404, "User not found!"));
+    const token = jwt.sign({ id: validUser._id }, process.env.JWT_SECRET, {
+      expiresIn: "1d",
+    });
+
+    var transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: process.env.GMAIL,
+        pass: process.env.PASSWORD,
+      },
+    });
+
+    var mailOptions = {
+      from: process.env.GMAIL,
+      to: validUser.email,
+      subject: "Reset your password",
+      text: `http://localhost:5173/forgetpassoword/${validUser._id}/${token}`
+    };
+
+    transporter.sendMail(mailOptions, function (error, info) {
+      if (error) {
+        console.log(error);
+      } else {
+        return res.send({Status:"Check your Email"});
+      }
+    });
+  
 };
