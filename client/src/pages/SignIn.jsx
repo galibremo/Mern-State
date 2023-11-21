@@ -62,6 +62,9 @@ export default function SignIn() {
           id="password"
           onChange={handleChange}
         />
+        <Link to={"/forgetpassword"}>
+          <span className="text-blue-700 hover:underline">Forget Password</span>
+        </Link>
         <button
           disabled={loading}
           className="bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-80"

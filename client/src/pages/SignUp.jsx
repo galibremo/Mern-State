@@ -97,6 +97,7 @@ export default function SignUp() {
           onChange={handleChange}
         />
         {frontEndError.password && <p className="text-red-500 my-1">{frontEndError.password}</p>}
+
         <button
           disabled={loading}
           className="bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-80"
