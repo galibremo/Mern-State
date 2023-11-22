@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
 
 export default function Forgetpassword() {
   const [formData, setFormData] = useState({});
@@ -34,7 +33,6 @@ export default function Forgetpassword() {
       setLoading(false);
       setError(null);
       setsuccessMail("Check your Email");
-      //navigate("/");
     } catch (error) {
       setLoading(false);
       setError(error.message);
@@ -62,7 +60,7 @@ export default function Forgetpassword() {
         </button>
       </form>
       {error || successMail ? (
-        <p className={`text-${error ? "red-500" : "green-500"} mt-5`}>
+        <p className={`text-${error ? "red-700" : "green-700"} mt-5`}>
           {error || successMail}
         </p>
       ) : null}

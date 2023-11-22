@@ -62,7 +62,7 @@ export default function Resetpassword() {
         </button>
       </form>
       {error || success ? (
-        <p className={`text-${error ? "red-500" : "green-500"} mt-5`}>
+        <p className={`text-${error ? "red-700" : "green-700"} mt-5`}>
           {error || success}
         </p>
       ) : null}
