@@ -11,6 +11,7 @@ import UpdateListing from "./pages/UpdateListing";
 import Listing from "./pages/Listing";
 import Search from "./pages/Search";
 import Forgetpassword from "./pages/Forgetpassword";
+import Resetpassword from "./pages/Resetpassword";
 
 export default function App() {
   return (
@@ -23,6 +24,7 @@ export default function App() {
         <Route path="/about" element={<About />} />
         <Route path="/search" element={<Search />}/>
         <Route path="/forgetpassword" element={<Forgetpassword />}/>
+        <Route path="/resetpassword/:id/:token" element={<Resetpassword />}/>
         <Route path="/listing/:listingId" element={<Listing />} />
         <Route element={<PrivateRoute />}>
           <Route path="/profile" element={<Profile />} />

@@ -95,7 +95,7 @@ export const forgetpassword = async (req, res, next) => {
       from: process.env.GMAIL,
       to: validUser.email,
       subject: "Reset your password",
-      text: `http://localhost:5173/forgetpassoword/${validUser._id}/${token}`
+      text: `http://localhost:5173/resetpassword/${validUser._id}/${token}`
     };
 
     transporter.sendMail(mailOptions, function (error, info) {
@@ -106,4 +106,16 @@ export const forgetpassword = async (req, res, next) => {
       }
     });
   
+};
+export const resetpassword = async (req,res,next)=>{
+  const{id,token} = req.params;
+  const {password} = req.body;
+  try {
+    jwt.verify(token,process.env.JWT_SECRET);
+    const hashedPassword = bcryptjs.hashSync(password, 10);
+    await User.findByIdAndUpdate({_id:id},{password:hashedPassword});
+    res.send({Status:"Success"});
+  } catch (error) {
+    next(error);
+  }
 };
